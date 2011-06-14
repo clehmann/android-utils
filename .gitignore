@@ -5,5 +5,5 @@ target
 .svn
 **/**/.svn
 bin
-gen
+gen/*
 
