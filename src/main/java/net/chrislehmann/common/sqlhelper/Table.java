@@ -2,6 +2,7 @@ package net.chrislehmann.common.sqlhelper;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -16,14 +17,16 @@ public class Table {
 
     private final String COLUMN_DEFINITION_SEPERATOR = ", ";
     private DatabaseHelper databaseHelper;
+    private Context context;
 
-    public Table(String name, DatabaseHelper databaseHelper) {
+    public Table(String name, DatabaseHelper databaseHelper, Context context) {
         this.name = name;
         this.databaseHelper = databaseHelper;
         if( databaseHelper != null )
         {
             databaseHelper.addTable(this);
         }
+        this.context = context;
     }
 
     public String getCreateString() {
@@ -64,6 +67,7 @@ public class Table {
 
     public Uri insert(Uri uri, ContentValues values) {
         long id = databaseHelper.getWritableDatabase().insertOrThrow(getName(), "ID", values);
+        context.getContentResolver().notifyChange(uri, null);
         return uri;
     }
 
