@@ -72,7 +72,9 @@ public class Table {
     }
 
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        int numDeleted = databaseHelper.getWritableDatabase().delete(getName(), selection, selectionArgs);
+        context.getContentResolver().notifyChange(uri, null);
+        return numDeleted;
     }
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
