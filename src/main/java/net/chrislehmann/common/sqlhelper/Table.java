@@ -22,8 +22,7 @@ public class Table {
     public Table(String name, DatabaseHelper databaseHelper, Context context) {
         this.name = name;
         this.databaseHelper = databaseHelper;
-        if( databaseHelper != null )
-        {
+        if (databaseHelper != null) {
             databaseHelper.addTable(this);
         }
         this.context = context;
@@ -78,7 +77,8 @@ public class Table {
     }
 
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        int numUpdated = databaseHelper.getWritableDatabase().update(getName(), values, selection, selectionArgs);
+        context.getContentResolver().notifyChange(uri, null);
+        return numUpdated;
     }
-
 }
