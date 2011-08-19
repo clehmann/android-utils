@@ -18,6 +18,7 @@ public class Table {
     private final String COLUMN_DEFINITION_SEPERATOR = ", ";
     private DatabaseHelper databaseHelper;
     private Context context;
+    private static final String LOGTAG = "Table";
 
     public Table(String name, DatabaseHelper databaseHelper, Context context) {
         this.name = name;
@@ -67,7 +68,7 @@ public class Table {
     public Uri insert(Uri uri, ContentValues values) {
         long id = databaseHelper.getWritableDatabase().insertOrThrow(getName(), "ID", values);
         context.getContentResolver().notifyChange(uri, null);
-        return uri;
+        return uri.buildUpon().appendPath(String.valueOf(id)).build();
     }
 
     public int delete(Uri uri, String selection, String[] selectionArgs) {
