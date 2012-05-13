@@ -18,6 +18,11 @@ public class PreferencesUtilities {
         return preferences.getInt(context.getText(preferenceId).toString(), defaultValue);
     }
 
+    public static long getPreferenceAsLong(Context context, int preferenceId, int defaultValue) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getLong(context.getText(preferenceId).toString(), defaultValue);
+    }
+
     public static boolean getPreferenceAsBoolean(Context context, int preferenceId, boolean defaultValue) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean(context.getText(preferenceId).toString(), defaultValue);
@@ -41,6 +46,11 @@ public class PreferencesUtilities {
         editor.commit();
     }
 
+    public static void savePreference(Context context, int preferenceId, long value) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putLong(context.getString(preferenceId), value);
+        editor.commit();
+    }
     private static SharedPreferences.Editor getEditor(Context context) {
         final SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return defaultSharedPreferences.edit();
